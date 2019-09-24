@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
 require_relative 'parser'
+require_relative 'commands/init_command'
 
-parser = RGitParser.new
-parser.parse(ARGV)
+subcommands = {
+  'init' => InitCommand.new
+}
+
+parser = RGitParser.new(subcommands)
+command = parser.parse(ARGV)
+command.execute unless command.nil?

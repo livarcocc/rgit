@@ -15,7 +15,6 @@ Available commands:
     show-ref:
     tag:
 HELP
-
-USAGE = "Usage: rbit COMMAND [options]"
-
+USAGE = "Usage: rgit COMMAND [options]"
+INIT_USAGE = "Usage: rgit init [options]"
 HELP_DESCRIPTION = "Show help"
