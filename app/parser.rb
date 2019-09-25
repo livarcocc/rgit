@@ -14,7 +14,6 @@ class RGitParser
 
       opts.on_tail("-h", "--help", HELP_DESCRIPTION) do
         puts opts
-        exit
       end
     end
 
@@ -22,17 +21,22 @@ class RGitParser
   end
 
   def parse(args)
-    args << '--help' if args.empty?
+    begin
+      args << '--help' if args.empty?
 
-    @parser.order!(args)
-    commandName = args.shift
-    command = nil
+      @parser.order!(args)
+      commandName = args.shift
+      command = nil
 
-    if @subcommands.has_key?(commandName)
-      command = @subcommands[commandName]
-      command.parse(args)
+      if @subcommands.has_key?(commandName)
+        command = @subcommands[commandName]
+        command.parse(args)
+      end
+
+      command
+    rescue OptionParser::MissingArgument
+      puts $!.to_s
+      puts "\n#{command.help}" if not command.nil?
     end
-
-    command
   end
 end

@@ -3,8 +3,8 @@ require_relative '../strings'
 class InitCommand
   attr_accessor :path
 
-  def parse(args)
-    OptionParser.new do |opts|
+  def initialize
+    @parser = OptionParser.new do |opts|
       opts.banner = INIT_USAGE
       opts.separator ""
 
@@ -15,11 +15,19 @@ class InitCommand
 
       opts.on_tail("-h", "--help", HELP_DESCRIPTION) do
         puts opts
-        exit
       end
-    end.parse!(args)
+    end
   end
 
+  def parse(args)
+    @parser.parse!(args)
+  end
+
+  #not happy that this class has two responsabilities: parsing and executing
   def execute
+  end
+
+  def help
+    @parser.to_s
   end
 end
