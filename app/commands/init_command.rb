@@ -3,7 +3,7 @@ require_relative '../strings'
 class InitCommand
   attr_accessor :path
 
-  def initialize
+  def initialize(gitRepository)
     @parser = OptionParser.new do |opts|
       opts.banner = INIT_USAGE
       opts.separator ""
@@ -17,6 +17,8 @@ class InitCommand
         puts opts
       end
     end
+
+    @gitRepository = gitRepository
   end
 
   def parse(args)
@@ -25,6 +27,7 @@ class InitCommand
 
   #not happy that this class has two responsabilities: parsing and executing
   def execute
+    @gitRepository.create(@path)
   end
 
   def help
